@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Numericle</title>
+    <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+
+    <div class="game-container">
+        <div class="title-container">
+            <h1>Numericle</h1>
+            <button onClick="window.location.reload();" class="refresh-btn">New Game</button>
+            <button data-modal-target="#modal" class="user-btn">How to Play</button>
+            <div class="modal" id="modal">
+                <div class="modal-header">
+                    <div class="title">How to Play</div>
+                    <button data-close-button class="close-button">&times;</button>
+                </div>
+                <div class="modal-body">
+                    Welcome to Numericle!! You have to guess a number with 6 digits(can have leading zeroes) within 7 tries. <br> Green: The digit entered is at the correct position as the answer. <br> Yellow: The digit entered is present in the answer
+                    but not at the given position. <br> Grey: The digit entered is not present in the answer. <br> A typical game would look like this: <br> <br>
+                    <img src="sampleimg.png" alt="Sample Image"><br> KEYS: <br> ENTER: To submit your guess. You can only submit a 6 digit number as guess. <br>
+                    <<: Backspace Key <br>
+                        New Game: To start a new Game <br>
+
+
+                </div>
+            </div>
+            <div id="overlay"></div>
+
+        </div>
+        <div class="message-container"></div>
+
+        <div class="tile-container"></div>
+        <div class="key-container"></div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+
+</html>
