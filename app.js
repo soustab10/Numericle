@@ -1,168 +1,532 @@
 const tileDisplay = document.querySelector('.tile-container');
 const keyboard = document.querySelector('.key-container');
 const messageDisplay = document.querySelector('.message-container');
+const buttonEasy = document.getElementById('lvl-btn-easy');
+const buttonMedium = document.getElementById('lvl-btn-med');
+const buttonHard = document.getElementById('lvl-btn-hard');
 
-let numericle = "";
+//beginning of easy mode
+startEasyLevel = () => {
+
+    buttonEasy.hidden = true;
+    buttonMedium.hidden = true;
+    buttonHard.hidden = true;
+    let numericle = "";
+    const getnumericle = () => {
+        numericle = Math.floor(100000 + Math.random() * 900000).toString();
+    }
+    getnumericle();
+    numericle = numericle.padStart(6, '0');
 
 
+    const keys = [
+        '0',
+        '1',
+        '2',
+        '3',
+        '4',
+        '5',
+        '6',
+        '7',
+        '8',
+        '9',
+        'ENTER',
+        '<<'
+    ];
+    const guessRows = [
+        ['', '', '', '', '', ''],
+        ['', '', '', '', '', ''],
+        ['', '', '', '', '', ''],
+        ['', '', '', '', '', ''],
+        ['', '', '', '', '', ''],
+        ['', '', '', '', '', ''],
+        ['', '', '', '', '', ''],
 
-const getnumericle = () => {
-    numericle = Math.floor(100000 + Math.random() * 900000).toString();
-}
-getnumericle();
-numericle = numericle.padStart(6, '0');
+    ];
+    let currentRow = 0;
+    let currentTile = 0;
+    let isGameOver = false;
 
-
-const keys = [
-    '0',
-    '1',
-    '2',
-    '3',
-    '4',
-    '5',
-    '6',
-    '7',
-    '8',
-    '9',
-    'ENTER',
-    '<<'
-];
-const guessRows = [
-    ['', '', '', '', '', ''],
-    ['', '', '', '', '', ''],
-    ['', '', '', '', '', ''],
-    ['', '', '', '', '', ''],
-    ['', '', '', '', '', ''],
-    ['', '', '', '', '', ''],
-    ['', '', '', '', '', ''],
-
-];
-let currentRow = 0;
-let currentTile = 0;
-let isGameOver = false;
-
-guessRows.forEach((guessRow, guessRowIndex) => {
-    const rowElement = document.createElement('div');
-    rowElement.setAttribute('id', 'guessRow-' + guessRowIndex);
-    guessRow.forEach((_guess, guessIndex) => { //guess imp comment
-        const tileElement = document.createElement('div')
-        tileElement.setAttribute('id', 'guessRow-' + guessRowIndex + '-tile-' + guessIndex);
-        tileElement.classList.add('tile');
-        rowElement.append(tileElement);
+    guessRows.forEach((guessRow, guessRowIndex) => {
+        const rowElement = document.createElement('div');
+        rowElement.setAttribute('id', 'guessRow-' + guessRowIndex);
+        guessRow.forEach((_guess, guessIndex) => { //guess imp comment
+            const tileElement = document.createElement('div')
+            tileElement.setAttribute('id', 'guessRow-' + guessRowIndex + '-tile-' + guessIndex);
+            tileElement.classList.add('tile');
+            rowElement.append(tileElement);
+        });
+        tileDisplay.append(rowElement);
     });
-    tileDisplay.append(rowElement);
-});
 
-keys.forEach(key => {
-    const buttonElement = document.createElement('button');
-    buttonElement.textContent = key;
-    buttonElement.setAttribute('id', key);
-    buttonElement.addEventListener('click', () => handleClick(key));
-    keyboard.append(buttonElement);
-})
+    keys.forEach(key => {
+        const buttonElement = document.createElement('button');
+        buttonElement.textContent = key;
+        buttonElement.setAttribute('id', key);
+        keyboard.append(buttonElement);
+        buttonElement.addEventListener('click', () => handleClick(key));
 
-const handleClick = (letter) => {
-    if (!isGameOver) {
-        if (letter === '<<') {
-            deleteLetter();
-            return;
+    });
+
+
+
+
+
+    const handleClick = (letter) => {
+        if (!isGameOver) {
+            if (letter === '<<') {
+                deleteLetter();
+                return;
+            }
+            if (letter === 'ENTER') {
+                checkRow();
+                return;
+            }
+            addLetter(letter);
         }
-        if (letter === 'ENTER') {
-            checkRow();
-            return;
+    };
+
+
+    const addLetter = (letter) => {
+        if (currentTile < 6 && currentRow < 8) {
+            const tile = document.getElementById('guessRow-' + currentRow + '-tile-' + currentTile);
+            tile.textContent = letter;
+            guessRows[currentRow][currentTile] = letter;
+            tile.setAttribute('data', letter);
+            currentTile++;
         }
-        addLetter(letter);
-    }
-};
+    };
 
-const addLetter = (letter) => {
-    if (currentTile < 6 && currentRow < 8) {
-        const tile = document.getElementById('guessRow-' + currentRow + '-tile-' + currentTile);
-        tile.textContent = letter;
-        guessRows[currentRow][currentTile] = letter;
-        tile.setAttribute('data', letter);
-        currentTile++;
-    }
-};
+    const deleteLetter = () => {
+        if (currentTile > 0) {
+            currentTile--;
+            const tile = document.getElementById('guessRow-' + currentRow + '-tile-' + currentTile);
+            tile.textContent = '';
+            guessRows[currentRow][currentTile] = '';
+            tile.setAttribute('data', '');
+        }
+    };
 
-const deleteLetter = () => {
-    if (currentTile > 0) {
-        currentTile--;
-        const tile = document.getElementById('guessRow-' + currentRow + '-tile-' + currentTile);
-        tile.textContent = '';
-        guessRows[currentRow][currentTile] = '';
-        tile.setAttribute('data', '');
-    }
-};
-
-const checkRow = () => {
-    const guess = guessRows[currentRow].join('');
-    if (currentTile >= 5) {
-        flipTile();
-        if (numericle == guess) {
-            showMessage('Magnificent! You solved in ' + (currentRow + 1) + ' tries!');
-            isGameOver = true;
-            return
-        } else {
-            if (currentRow >= 6) {
+    const checkRow = () => {
+        const guess = guessRows[currentRow].join('');
+        if (currentTile >= 5) {
+            flipTile();
+            if (numericle == guess) {
+                showMessage('Magnificent! You solved in ' + (currentRow + 1) + ' tries!');
                 isGameOver = true;
-                showMessage('Game Over. You were close!! The answer was:' + numericle);
                 return
-            }
-            if (currentRow < 6) {
-                currentRow++;
-                currentTile = 0;
+            } else {
+                if (currentRow >= 6) {
+                    isGameOver = true;
+                    showMessage('Game Over. You were close!! The answer was:' + numericle);
+                    return
+                }
+                if (currentRow < 6) {
+                    currentRow++;
+                    currentTile = 0;
+                }
             }
         }
+    };
+
+
+    const showMessage = (message) => {
+        const messageElement = document.createElement('p');
+        messageElement.textContent = message;
+        messageDisplay.append(messageElement);
+        setTimeout(() => messageDisplay.removeChild(messageElement), 3000);
+    };
+
+    const addColorToKey = (keyLetter, color) => {
+        const key = document.getElementById(keyLetter);
+        key.classList.add(color);
+    };
+
+    const flipTile = () => {
+        const rowTiles = document.querySelector('#guessRow-' + currentRow).childNodes;
+        let checknumericle = numericle;
+        const guess = [];
+
+        rowTiles.forEach(tile => {
+            guess.push({ letter: tile.getAttribute('data'), color: 'grey-overlay' })
+        });
+        guess.forEach((guess, index) => {
+            if (guess.letter == numericle[index]) {
+                guess.color = 'green-overlay';
+                checknumericle = checknumericle.replace(guess.letter, '');
+            }
+        })
+        guess.forEach((guess, index) => {
+            if (checknumericle.includes(guess.letter) && guess.letter != numericle[index]) {
+                guess.color = 'yellow-overlay';
+                checknumericle = checknumericle.replace(guess.letter, '');
+            }
+        })
+
+
+
+
+
+        rowTiles.forEach((tile, index) => {
+            setTimeout(() => {
+                tile.classList.add('flip')
+                tile.classList.add(guess[index].color)
+                addColorToKey(guess[index].letter, guess[index].color)
+            }, 500 * index)
+        })
     }
 }
 
 
-const showMessage = (message) => {
-    const messageElement = document.createElement('p');
-    messageElement.textContent = message;
-    messageDisplay.append(messageElement);
-    setTimeout(() => messageDisplay.removeChild(messageElement), 3000);
-};
+//medium level begins
 
-const addColorToKey = (keyLetter, color) => {
-    const key = document.getElementById(keyLetter);
-    key.classList.add(color);
-};
+startMediumLevel = () => {
+    buttonEasy.hidden = true;
+    buttonMedium.hidden = true;
+    buttonHard.hidden = true;
 
-const flipTile = () => {
-    const rowTiles = document.querySelector('#guessRow-' + currentRow).childNodes;
-    let checknumericle = numericle;
-    const guess = [];
+    let numericle = "";
+    const getnumericle = () => {
+        numericle = Math.floor(1000000 + Math.random() * 9000000).toString();
+    }
+    getnumericle();
+    numericle = numericle.padStart(7, '0');
 
-    rowTiles.forEach(tile => {
-        guess.push({ letter: tile.getAttribute('data'), color: 'grey-overlay' })
+
+    const keys = [
+        '0',
+        '1',
+        '2',
+        '3',
+        '4',
+        '5',
+        '6',
+        '7',
+        '8',
+        '9',
+        'ENTER',
+        '<<'
+    ];
+    const guessRows = [
+        ['', '', '', '', '', '', ''],
+        ['', '', '', '', '', '', ''],
+        ['', '', '', '', '', '', ''],
+        ['', '', '', '', '', '', ''],
+        ['', '', '', '', '', '', ''],
+        ['', '', '', '', '', '', ''],
+        ['', '', '', '', '', '', '']
+    ];
+    let currentRow = 0;
+    let currentTile = 0;
+    let isGameOver = false;
+
+    guessRows.forEach((guessRow, guessRowIndex) => {
+        const rowElement = document.createElement('div');
+        rowElement.setAttribute('id', 'guessRow-' + guessRowIndex);
+        guessRow.forEach((_guess, guessIndex) => { //guess imp comment
+            const tileElement = document.createElement('div')
+            tileElement.setAttribute('id', 'guessRow-' + guessRowIndex + '-tile-' + guessIndex);
+            tileElement.classList.add('tile');
+            rowElement.append(tileElement);
+        });
+        tileDisplay.append(rowElement);
     });
-    guess.forEach((guess, index) => {
-        if (guess.letter == numericle[index]) {
-            guess.color = 'green-overlay';
-            checknumericle = checknumericle.replace(guess.letter, '');
+
+    keys.forEach(key => {
+        const buttonElement = document.createElement('button');
+        buttonElement.textContent = key;
+        buttonElement.setAttribute('id', key);
+        keyboard.append(buttonElement);
+        buttonElement.addEventListener('click', () => handleClick(key));
+
+    });
+
+
+
+    const handleClick = (letter) => {
+        if (!isGameOver) {
+            if (letter === '<<') {
+                deleteLetter();
+                return;
+            }
+            if (letter === 'ENTER') {
+                checkRow();
+                return;
+            }
+            addLetter(letter);
         }
-    })
-    guess.forEach((guess, index) => {
-        if (checknumericle.includes(guess.letter) && guess.letter != numericle[index]) {
-            guess.color = 'yellow-overlay';
-            checknumericle = checknumericle.replace(guess.letter, '');
+    };
+
+
+    const addLetter = (letter) => {
+        if (currentTile < 7 && currentRow < 8) {
+            const tile = document.getElementById('guessRow-' + currentRow + '-tile-' + currentTile);
+            tile.textContent = letter;
+            guessRows[currentRow][currentTile] = letter;
+            tile.setAttribute('data', letter);
+            currentTile++;
         }
-    })
+    };
+
+    const deleteLetter = () => {
+        if (currentTile > 0) {
+            currentTile--;
+            const tile = document.getElementById('guessRow-' + currentRow + '-tile-' + currentTile);
+            tile.textContent = '';
+            guessRows[currentRow][currentTile] = '';
+            tile.setAttribute('data', '');
+        }
+    };
+
+    const checkRow = () => {
+        const guess = guessRows[currentRow].join('');
+        if (currentTile >= 6) {
+            flipTile();
+            if (numericle == guess) {
+                showMessage('Magnificent! You solved in ' + (currentRow + 1) + ' tries!');
+                isGameOver = true;
+                return
+            } else {
+                if (currentRow >= 6) {
+                    isGameOver = true;
+                    showMessage('Game Over. You were close!! The answer was:' + numericle);
+                    return
+                }
+                if (currentRow < 6) {
+                    currentRow++;
+                    currentTile = 0;
+                }
+            }
+        }
+    };
+
+
+    const showMessage = (message) => {
+        const messageElement = document.createElement('p');
+        messageElement.textContent = message;
+        messageDisplay.append(messageElement);
+        setTimeout(() => messageDisplay.removeChild(messageElement), 3000);
+    };
+
+    const addColorToKey = (keyLetter, color) => {
+        const key = document.getElementById(keyLetter);
+        key.classList.add(color);
+    };
+
+    const flipTile = () => {
+        const rowTiles = document.querySelector('#guessRow-' + currentRow).childNodes;
+        let checknumericle = numericle;
+        const guess = [];
+
+        rowTiles.forEach(tile => {
+            guess.push({ letter: tile.getAttribute('data'), color: 'grey-overlay' })
+        });
+        guess.forEach((guess, index) => {
+            if (guess.letter == numericle[index]) {
+                guess.color = 'green-overlay';
+                checknumericle = checknumericle.replace(guess.letter, '');
+            }
+        })
+        guess.forEach((guess, index) => {
+            if (checknumericle.includes(guess.letter) && guess.letter != numericle[index]) {
+                guess.color = 'yellow-overlay';
+                checknumericle = checknumericle.replace(guess.letter, '');
+            }
+        })
 
 
 
 
 
-    rowTiles.forEach((tile, index) => {
-        setTimeout(() => {
-            tile.classList.add('flip')
-            tile.classList.add(guess[index].color)
-            addColorToKey(guess[index].letter, guess[index].color)
-        }, 500 * index)
-    })
+        rowTiles.forEach((tile, index) => {
+            setTimeout(() => {
+                tile.classList.add('flip')
+                tile.classList.add(guess[index].color)
+                addColorToKey(guess[index].letter, guess[index].color)
+            }, 500 * index)
+        })
+    }
 }
+
+//hard level starts
+
+startHardLevel = () => {
+    buttonEasy.hidden = true;
+    buttonMedium.hidden = true;
+    buttonHard.hidden = true;
+
+    let numericle = "";
+    const getnumericle = () => {
+        numericle = Math.floor(Math.random() * 99999999).toString();
+    }
+    getnumericle();
+    numericle = numericle.padStart(8, '0');
+
+
+
+    const keys = [
+        '0',
+        '1',
+        '2',
+        '3',
+        '4',
+        '5',
+        '6',
+        '7',
+        '8',
+        '9',
+        'ENTER',
+        '<<'
+    ];
+    const guessRows = [
+        ['', '', '', '', '', '', '', ''],
+        ['', '', '', '', '', '', '', ''],
+        ['', '', '', '', '', '', '', ''],
+        ['', '', '', '', '', '', '', ''],
+        ['', '', '', '', '', '', '', ''],
+        ['', '', '', '', '', '', '', ''],
+        ['', '', '', '', '', '', '', ''],
+        ['', '', '', '', '', '', '', ''],
+    ];
+    let currentRow = 0;
+    let currentTile = 0;
+    let isGameOver = false;
+
+    guessRows.forEach((guessRow, guessRowIndex) => {
+        const rowElement = document.createElement('div');
+        rowElement.setAttribute('id', 'guessRow-' + guessRowIndex);
+        guessRow.forEach((_guess, guessIndex) => { //guess imp comment
+            const tileElement = document.createElement('div')
+            tileElement.setAttribute('id', 'guessRow-' + guessRowIndex + '-tile-' + guessIndex);
+            tileElement.classList.add('tile');
+            rowElement.append(tileElement);
+        });
+        tileDisplay.append(rowElement);
+    });
+
+    keys.forEach(key => {
+        const buttonElement = document.createElement('button');
+        buttonElement.textContent = key;
+        buttonElement.setAttribute('id', key);
+        keyboard.append(buttonElement);
+        buttonElement.addEventListener('click', () => handleClick(key));
+
+    });
+
+
+
+    const handleClick = (letter) => {
+        if (!isGameOver) {
+            if (letter === '<<') {
+                deleteLetter();
+                return;
+            }
+            if (letter === 'ENTER') {
+                checkRow();
+                return;
+            }
+            addLetter(letter);
+        }
+    };
+
+
+    const addLetter = (letter) => {
+        if (currentTile < 8 && currentRow < 9) {
+            const tile = document.getElementById('guessRow-' + currentRow + '-tile-' + currentTile);
+            tile.textContent = letter;
+            guessRows[currentRow][currentTile] = letter;
+            tile.setAttribute('data', letter);
+            currentTile++;
+        }
+    };
+
+    const deleteLetter = () => {
+        if (currentTile > 0) {
+            currentTile--;
+            const tile = document.getElementById('guessRow-' + currentRow + '-tile-' + currentTile);
+            tile.textContent = '';
+            guessRows[currentRow][currentTile] = '';
+            tile.setAttribute('data', '');
+        }
+    };
+
+    const checkRow = () => {
+        const guess = guessRows[currentRow].join('');
+        if (currentTile >= 7) {
+            flipTile();
+            if (numericle == guess) {
+                showMessage('Magnificent! You solved in ' + (currentRow + 1) + ' tries!');
+                isGameOver = true;
+                return
+            } else {
+                if (currentRow >= 7) {
+                    isGameOver = true;
+                    showMessage('Game Over. You were close!! The answer was:' + numericle);
+                    return
+                }
+                if (currentRow < 7) {
+                    currentRow++;
+                    currentTile = 0;
+                }
+            }
+        }
+    };
+
+
+    const showMessage = (message) => {
+        const messageElement = document.createElement('p');
+        messageElement.textContent = message;
+        messageDisplay.append(messageElement);
+        setTimeout(() => messageDisplay.removeChild(messageElement), 3000);
+    };
+
+    const addColorToKey = (keyLetter, color) => {
+        const key = document.getElementById(keyLetter);
+        key.classList.add(color);
+    };
+
+    const flipTile = () => {
+        const rowTiles = document.querySelector('#guessRow-' + currentRow).childNodes;
+        let checknumericle = numericle;
+        const guess = [];
+
+        rowTiles.forEach(tile => {
+            guess.push({ letter: tile.getAttribute('data'), color: 'grey-overlay' })
+        });
+        guess.forEach((guess, index) => {
+            if (guess.letter == numericle[index]) {
+                guess.color = 'green-overlay';
+                checknumericle = checknumericle.replace(guess.letter, '');
+            }
+        })
+        guess.forEach((guess, index) => {
+            if (checknumericle.includes(guess.letter) && guess.letter != numericle[index]) {
+                guess.color = 'yellow-overlay';
+                checknumericle = checknumericle.replace(guess.letter, '');
+            }
+        })
+
+
+
+
+
+        rowTiles.forEach((tile, index) => {
+            setTimeout(() => {
+                tile.classList.add('flip')
+                tile.classList.add(guess[index].color)
+                addColorToKey(guess[index].letter, guess[index].color)
+            }, 500 * index)
+        })
+    }
+}
+
+
+
+
+
+
+
+
 
 const openModalButtons = document.querySelectorAll('[data-modal-target]')
 const closeModalButtons = document.querySelectorAll('[data-close-button]')
