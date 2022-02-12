@@ -1,22 +1,23 @@
 const tileDisplay = document.querySelector('.tile-container');
 const keyboard = document.querySelector('.key-container');
 const messageDisplay = document.querySelector('.message-container');
-const buttonEasy = document.getElementById('lvl-btn-easy');
-const buttonMedium = document.getElementById('lvl-btn-med');
-const buttonHard = document.getElementById('lvl-btn-hard');
+let buttonEasy = document.getElementById('lvl-btn-easy');
+let buttonMedium = document.getElementById('lvl-btn-med');
+let buttonHard = document.getElementById('lvl-btn-hard');
 
 //beginning of easy mode
 startEasyLevel = () => {
 
-    buttonEasy.hidden = true;
-    buttonMedium.hidden = true;
-    buttonHard.hidden = true;
+    buttonEasy.style.display = "none";
+    buttonMedium.style.display = "none";
+    buttonHard.style.display = "none";
     let numericle = "";
     const getnumericle = () => {
         numericle = Math.floor(100000 + Math.random() * 900000).toString();
     }
     getnumericle();
     numericle = numericle.padStart(6, '0');
+    console.log(numericle);
 
 
     const keys = [
@@ -181,9 +182,9 @@ startEasyLevel = () => {
 //medium level begins
 
 startMediumLevel = () => {
-    buttonEasy.hidden = true;
-    buttonMedium.hidden = true;
-    buttonHard.hidden = true;
+    buttonEasy.style.display = "none";
+    buttonMedium.style.display = "none";
+    buttonHard.style.display = "none";
 
     let numericle = "";
     const getnumericle = () => {
@@ -351,9 +352,9 @@ startMediumLevel = () => {
 //hard level starts
 
 startHardLevel = () => {
-    buttonEasy.hidden = true;
-    buttonMedium.hidden = true;
-    buttonHard.hidden = true;
+    buttonEasy.style.display = "none";
+    buttonMedium.style.display = "none";
+    buttonHard.style.display = "none";
 
     let numericle = "";
     const getnumericle = () => {

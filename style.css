@@ -73,12 +73,13 @@ body {
 
 .message-container {
     margin-top: 5px;
-    height: 10px;
+    height: fit-content;
     width: fit-content;
 }
 
 .message-container p {
     background-color: #818384;
+    font-size: 14px;
     border-radius: 10px;
     padding: 5px;
     margin: 0;
@@ -194,6 +195,9 @@ img {
 
 .lvl-buttons {
     padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 #lvl-btn-easy,
