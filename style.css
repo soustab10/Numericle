@@ -8,7 +8,7 @@ body {
 }
 
 .game-container {
-    /* height: 90vh; */
+    height: 90vh;
     display: flex;
     flex-direction: column;
     justify-content: start;
@@ -24,7 +24,7 @@ body {
 .tile-container {
     /* width: 100%; */
     padding: 0.5rem;
-    padding-top: 35px;
+    /* padding-top: 35px; */
     margin-bottom: 1.875rem;
     margin: 0 auto;
 }
@@ -121,6 +121,10 @@ body {
     font-size: 15px;
 }
 
+#modal-levels {
+    list-style-type: none;
+}
+
 .modal {
     position: fixed;
     top: 50%;
@@ -130,8 +134,9 @@ body {
     border: 1px solid black;
     border-radius: 10px;
     z-index: 10;
+    font-size: 15px;
     background-color: rgb(29, 28, 31);
-    width: 500px;
+    width: 900px;
     max-width: 80%;
 }
 
@@ -185,4 +190,26 @@ body {
 img {
     height: 350px;
     width: 300px;
+}
+
+.lvl-buttons {
+    padding: 20px;
+}
+
+#lvl-btn-easy,
+#lvl-btn-med,
+#lvl-btn-hard {
+    font-size: 17.5px;
+}
+
+#lvl-btn-easy {
+    background-color: #24661e;
+}
+
+#lvl-btn-med {
+    background-color: darkorange;
+}
+
+#lvl-btn-hard {
+    background-color: rgb(126, 17, 17);
 }
