@@ -386,8 +386,8 @@ startHardLevel = () => {
         ['', '', '', '', '', '', '', ''],
         ['', '', '', '', '', '', '', ''],
         ['', '', '', '', '', '', '', ''],
-        ['', '', '', '', '', '', '', ''],
-        ['', '', '', '', '', '', '', ''],
+        ['', '', '', '', '', '', '', '']
+
     ];
     let currentRow = 0;
     let currentTile = 0;
@@ -432,7 +432,7 @@ startHardLevel = () => {
 
 
     const addLetter = (letter) => {
-        if (currentTile < 8 && currentRow < 9) {
+        if (currentTile < 8 && currentRow < 8) {
             const tile = document.getElementById('guessRow-' + currentRow + '-tile-' + currentTile);
             tile.textContent = letter;
             guessRows[currentRow][currentTile] = letter;
@@ -460,7 +460,7 @@ startHardLevel = () => {
                 isGameOver = true;
                 return
             } else {
-                if (currentRow >= 7) {
+                if (currentRow >= 6) {
                     isGameOver = true;
                     showMessage('Game Over. You were close!! The answer was:' + numericle);
                     return
