@@ -80,7 +80,9 @@ startEasyLevel = () => {
                 return;
             }
             if (letter === 'ENTER') {
-                checkRow();
+                if (currentTile >= 6) {
+                    checkRow();
+                }
                 return;
             }
             addLetter(letter);
@@ -251,7 +253,10 @@ startMediumLevel = () => {
                 return;
             }
             if (letter === 'ENTER') {
-                checkRow();
+                if (currentTile >= 7) {
+                    checkRow();
+                }
+                return;
                 return;
             }
             addLetter(letter);
@@ -423,7 +428,10 @@ startHardLevel = () => {
                 return;
             }
             if (letter === 'ENTER') {
-                checkRow();
+                if (currentTile >= 8) {
+                    checkRow();
+                }
+                return;
                 return;
             }
             addLetter(letter);
