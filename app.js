@@ -7,6 +7,7 @@ let buttonHard = document.getElementById('lvl-btn-hard');
 let buttonTournament = document.getElementById('lvl-btn-tournament');
 let lvlButtonClass = document.querySelector('.lvl-buttons');
 let tournamentIcon = document.querySelector('.tournament-icon');
+let creatorAttribute = document.querySelector('.attr');
 let rowTile = [];
 let guessRows = [];
 let successfulGame = false;
@@ -23,6 +24,7 @@ hideButtons = () => {
     buttonTournament.style.display = "none";
     lvlButtonClass.style.display = "none";
     tournamentIcon.style.display = "none";
+    creatorAttribute.style.display = "none";
 
 };
 calculateScore = (rows) => {
