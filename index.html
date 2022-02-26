@@ -4,17 +4,26 @@
 <head>
     <meta charset="UTF-8">
     <title>Numericle</title>
-    
+    <meta name="viewport" content="width=device-width, user-scalable=no">
     <link rel="stylesheet" href="style.css" />
+
+    <script src="app.js" defer></script>
+
 </head>
 
 <body>
 
+    <a href="https://numericle-tournament.netlify.app/" class="tournament-icon"><img class="fa" src="icons8-battle-64.png"></a>
     <div class="game-container">
         <div class="title-container">
             <h1>Numericle</h1>
 
+
+
+
+
             <button onClick="window.location.reload();" class="refresh-btn">New Game</button>
+
             <button data-modal-target="#modal" class="user-btn">How to Play</button>
             <div class="modal" id="modal">
                 <div class="modal-header">
@@ -22,11 +31,11 @@
                     <button data-close-button class="close-button">&times;</button>
                 </div>
                 <div class="modal-body">
-                    Welcome to Numericle!! You have to guess a number(can have leading zeroes). <br> Choose your Level:
+                    Welcome to Numericle!! You have to guess a number(can have leading zeroes).<br> NEW: TOURNAMENT MODE IS NOW LIVE! PLAY TO EARN A SPOT ON THE LEADERBOARD. CLICK ON THE SWORDS ICON OR PLAY TOURNAMENT BUTTON TO PLAY.<br> Choose your Level:
                     <ul id="modal-levels">
                         <li>EASY: Guess a 6 digit number in 7 tries</li>
                         <li>MEDIUM: Guess a 7 digit number in 7 tries</li>
-                        <li>EASY: Guess a 8 digit number in 8 tries</li>
+                        <li>EASY: Guess a 8 digit number in 7 tries</li>
                     </ul> Green: The digit entered is at the correct position as the answer. <br> Yellow: The digit entered is present in the answer but not at the given position. <br> Grey: The digit entered is not present in the answer. <br> A typical game
                     would look like this: <br> <br>
                     <img src="sampleimg.png" alt="Sample Image"><br> KEYS: <br> ENTER: To submit your guess. You can only submit a 6 digit number as guess. <br>
@@ -34,14 +43,20 @@
                         New Game: To start a new Game <br>
 
 
+
                 </div>
             </div>
+
             <div id="overlay"></div>
             <div class="lvl-buttons">
                 <input type="button" id="lvl-btn-easy" onclick="startEasyLevel()" value="Easy Level" />
                 <input type="button" id="lvl-btn-med" onclick="startMediumLevel()" value="Medium Level" />
-                <input type="button" id="lvl-btn-hard" onclick="startHardLevel()" value="Hard Level" />
+                <input type="button" id="lvl-btn-hard" onclick="startHardLevel()" value="Hard Level" /><br>
+                <div class="emoji-container">&#9876 &#128071 Play the NEW Tournament Mode NOW! &#128071 &#9876 </div>
+                <input type="button" id="lvl-btn-tournament" onclick="window.location.href='https://numericle-tournament.netlify.app/'" value="Play Tournament" />
+
                 <div class="message-container"></div>
+
             </div>
 
 
@@ -52,7 +67,7 @@
         <div class="key-container"></div>
     </div>
 
-    <script src="app.js"></script>
+
 </body>
 
 </html>

@@ -5,6 +5,12 @@ let buttonEasy = document.getElementById('lvl-btn-easy');
 let buttonMedium = document.getElementById('lvl-btn-med');
 let buttonHard = document.getElementById('lvl-btn-hard');
 let buttonTournament = document.getElementById('lvl-btn-tournament');
+let lvlButtonClass = document.querySelector('.lvl-buttons');
+let tournamentIcon = document.querySelector('.tournament-icon');
+let rowTile = [];
+let guessRows = [];
+let successfulGame = false;
+let isGameOver = false;
 
 getNumericle = () => {
     return Math.floor(Math.random() * 99999999).toString();
@@ -13,13 +19,20 @@ getNumericle = () => {
 hideButtons = () => {
     buttonEasy.style.display = "none";
     buttonMedium.style.display = "none";
-    buttonHard.style.display = "none";    
+    buttonHard.style.display = "none";
+    buttonTournament.style.display = "none";
+    lvlButtonClass.style.display = "none";
+    tournamentIcon.style.display = "none";
+
+};
+calculateScore = (rows) => {
+    return (100 - rows * 10);
 };
 
 startLevel = (digits, rows) => {
     hideButtons();
     let numericle = (getNumericle()).substring(0, digits) + ''; //123456789
-    // console.log(numericle);
+    console.log(numericle);
     const keys = [
         '0',
         '1',
@@ -34,8 +47,7 @@ startLevel = (digits, rows) => {
         'ENTER',
         '<<'
     ];
-    let rowTile = [];
-    let guessRows = [];
+
     for (let i = 0; i < digits; i++) {
         rowTile.push('');
     }
@@ -44,7 +56,7 @@ startLevel = (digits, rows) => {
     }
     let currentRow = 0;
     let currentTile = 0;
-    let isGameOver = false;
+
 
     guessRows.forEach((guessRow, guessRowIndex) => {
         const rowElement = document.createElement('div');
@@ -97,6 +109,7 @@ startLevel = (digits, rows) => {
             if (numericle == guess) {
                 showMessage('Magnificent! You solved in ' + (currentRow + 1) + ' tries!');
                 isGameOver = true;
+                successfulGame = true;
                 return;
             } else {
                 if (currentRow >= (rows - 1)) {
@@ -163,13 +176,11 @@ startLevel = (digits, rows) => {
             if (letter === 'ENTER') {
                 if (currentTile >= digits)
                     checkRow();
-                return;
+                return
             }
             addLetter(letter);
         }
     };
-
-
 };
 
 //beginning of solo levels
@@ -180,8 +191,11 @@ startMediumLevel = () => {
     startLevel(7, 7);
 }
 startHardLevel = () => {
-    startLevel(8, 6);
+    startLevel(8, 7);
 }
+
+
+
 const openModalButtons = document.querySelectorAll('[data-modal-target]')
 const closeModalButtons = document.querySelectorAll('[data-close-button]')
 const overlay = document.getElementById('overlay')
