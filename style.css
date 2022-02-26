@@ -10,7 +10,7 @@ body {
 }
 
 h1 {
-    font-size: 2rem;
+    font-size: 1.5rem;
     padding-top: 0.1rem;
     padding-bottom: 0rem;
 }
@@ -98,7 +98,7 @@ h1 {
 
 .tile {
     width: 2.25rem;
-    height: 3rem;
+    height: 2.75rem;
     border: 2px solid#3a3a3c;
     box-sizing: border-box;
     display: flex;
@@ -177,7 +177,7 @@ h1 {
     border: 1px solid black;
     border-radius: 10px;
     z-index: 10;
-    font-size: 0.65rem;
+    font-size: 0.6rem;
     background-color: rgb(29, 28, 31);
     width: 900px;
     max-width: 80%;
@@ -348,7 +348,7 @@ img {
         padding: 0.5rem;
     }
     .modal {
-        font-size: 0.6rem;
+        font-size: 0.7rem;
     }
     .modal-header {
         padding: 10px 15px;
